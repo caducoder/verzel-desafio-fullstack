@@ -1,9 +1,9 @@
 package com.verzel.carros.service;
 
-import java.util.List;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.verzel.carros.dto.CarroDTO;
@@ -16,8 +16,8 @@ public class CarroService {
 	@Autowired
 	private CarroRepository carroRepository;
 
-	public List<Carro> getAll() {
-		return carroRepository.findAll();
+	public Page<Carro> getAll(Pageable pageable) {
+		return carroRepository.findAll(pageable);
 	}
 
 	public Carro addCar(CarroDTO carroDto) {
