@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.verzel.carros.dto.CarroDTO;
 import com.verzel.carros.model.Carro;
@@ -15,14 +16,22 @@ public class CarroService {
 
 	@Autowired
 	private CarroRepository carroRepository;
+	
+	@Autowired
+	private ImageService imageService;
 
 	public Page<Carro> getAll(Pageable pageable) {
 		return carroRepository.findAll(pageable);
 	}
 
-	public Carro addCar(CarroDTO carroDto) {
+	public Carro addCar(CarroDTO carroDto, MultipartFile imageFile) {
 		ModelMapper mapper = new ModelMapper();
 		Carro carro = mapper.map(carroDto, Carro.class);
+		
+		if(imageFile != null) {
+			carro.setFoto(imageService.uploadToLocalFileSystem(imageFile));	
+		}
+		
 		return carroRepository.save(carro);
 	}
 	
