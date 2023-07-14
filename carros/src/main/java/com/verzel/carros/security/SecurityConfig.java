@@ -55,7 +55,6 @@ public class SecurityConfig {
             .authorizeHttpRequests((authz) -> authz
             	.antMatchers(HttpMethod.POST, "/auth/login").permitAll()
             	.antMatchers(HttpMethod.GET, "/carros").permitAll()
-            	.antMatchers(HttpMethod.GET, "/h2-console").permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
