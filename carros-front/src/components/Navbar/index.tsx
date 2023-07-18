@@ -11,7 +11,7 @@ function Navbar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="relative" sx={{ bgcolor: "#232323" }}>
-        <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
+        <Toolbar sx={{ display: "flex", justifyContent: "center", height: '10vh' }}>
           <Box sx={{ width: "1200px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <Typography
               variant="h6"
@@ -22,7 +22,7 @@ function Navbar() {
                 Verzel Carros
               </Link>
             </Typography>
-            <Button color="inherit" onClick={handleLoginButtonClick}>Login</Button>
+            <Button color="inherit" onClick={handleLoginButtonClick}>Entrar</Button>
           </Box>
         </Toolbar>
       </AppBar >
