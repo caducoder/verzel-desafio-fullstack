@@ -10,21 +10,23 @@ function Navbar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ bgcolor: "#232323" }}>
-        <Toolbar>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, fontWeight: "bold" }}
-          >
-            <Link component={RouterLink} to="/" underline="none" color="#fff">
-              Verzel Carros
-            </Link>
-          </Typography>
-          <Button color="inherit" onClick={handleLoginButtonClick}>Login</Button>
+      <AppBar position="relative" sx={{ bgcolor: "#232323" }}>
+        <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
+          <Box sx={{ width: "1200px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, fontWeight: "bold" }}
+            >
+              <Link component={RouterLink} to="/" underline="none" color="#fff">
+                Verzel Carros
+              </Link>
+            </Typography>
+            <Button color="inherit" onClick={handleLoginButtonClick}>Login</Button>
+          </Box>
         </Toolbar>
-      </AppBar>
-    </Box>
+      </AppBar >
+    </Box >
   );
 }
 

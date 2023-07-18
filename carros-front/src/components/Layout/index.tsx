@@ -1,13 +1,15 @@
 import { Outlet } from "react-router-dom";
+import { Container } from '@mui/material';
 import Navbar from "../Navbar";
 
 function Layout() {
+
   return (
     <>
       <Navbar />
-      <main>
+      <Container maxWidth="lg" disableGutters>
         <Outlet />
-      </main>
+      </Container>
     </>
   );
 }
