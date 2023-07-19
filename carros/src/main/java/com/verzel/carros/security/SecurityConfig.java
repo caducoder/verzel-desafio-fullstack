@@ -35,7 +35,7 @@ public class SecurityConfig {
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();    
+		return new BCryptPasswordEncoder();
 	}
 	
 	@Bean
@@ -49,11 +49,11 @@ public class SecurityConfig {
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-        	.cors() // para permitir uma requisição preflight sem o cabeçalho de autorização
+        	.cors()
         	.and()
         	.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests((authz) -> authz
-            	.antMatchers(HttpMethod.POST, "/auth/login").permitAll()
+            	.antMatchers(HttpMethod.POST, "/login").permitAll()
             	.antMatchers(HttpMethod.GET, "/carros").permitAll()
             	.antMatchers(HttpMethod.GET, "/images/**").permitAll()
                 .anyRequest().authenticated()

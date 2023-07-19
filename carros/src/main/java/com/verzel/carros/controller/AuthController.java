@@ -15,30 +15,29 @@ import com.verzel.carros.dto.LoginResponseDTO;
 import com.verzel.carros.security.JwtTokenService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/login")
 public class AuthController {
-	
+
 	@Autowired
 	private JwtTokenService jwtTokenService;
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	@PostMapping("/login")
-	public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginDTO data){
+	@PostMapping
+	public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginDTO data) {
 		try {
-			Authentication authentication =  authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(data.email(), data.senha())
-			);
-			
+			Authentication authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(data.email(), data.senha()));
+
 			String token = jwtTokenService.generateToken(authentication);
 			LoginResponseDTO tokenResponse = new LoginResponseDTO(token);
-			
+
 			return ResponseEntity.ok(tokenResponse);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return ResponseEntity.notFound().build();
 		}
-		
+
 	}
 }
