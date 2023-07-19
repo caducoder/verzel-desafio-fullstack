@@ -1,11 +1,18 @@
 import { Box, AppBar, Toolbar, Typography, Button, Link } from "@mui/material";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 function Navbar() {
+  const { token, setToken } = useAuth()
+  const isLogged = !!token
   const navigate = useNavigate()
 
   const handleLoginButtonClick = () => {
     navigate("/login")
+  }
+
+  const handleLogoutButtonClick = () => {
+    setToken("")
   }
 
   return (
@@ -22,7 +29,11 @@ function Navbar() {
                 Verzel Carros
               </Link>
             </Typography>
-            <Button color="inherit" onClick={handleLoginButtonClick}>Entrar</Button>
+            {
+              isLogged
+                ? <Button color="inherit" onClick={handleLogoutButtonClick}>Sair</Button>
+                : <Button color="inherit" onClick={handleLoginButtonClick}>Entrar</Button>
+            }
           </Box>
         </Toolbar>
       </AppBar >
