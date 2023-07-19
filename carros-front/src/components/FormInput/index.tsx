@@ -6,9 +6,9 @@ export interface FormInputProps {
   name: string;
   control: Control<any, any>;
   label: string;
-  type: 'text' | 'email' | 'password'
-  required: true | false,
-  errorText: string
+  type: 'text' | 'email' | 'password' | 'number'
+  required?: true | false,
+  errorText?: string
 }
 
 function FormInput({ name, control, label, type, required, errorText }: FormInputProps) {
@@ -34,6 +34,7 @@ function FormInput({ name, control, label, type, required, errorText }: FormInpu
           error={!!error}
           helperText={error ? error.message : null}
           type={type}
+
         />
       )}
     />

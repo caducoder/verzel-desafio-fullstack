@@ -11,7 +11,7 @@ function Layout() {
       <Container
         maxWidth="lg"
         disableGutters
-        sx={{ display: 'flex', flexDirection: 'column', minHeight: '80vh' }}
+        sx={{ display: 'flex', flexDirection: 'column', minHeight: '80vh', px: 2 }}
       >
         <Outlet />
       </Container>

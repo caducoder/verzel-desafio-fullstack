@@ -9,25 +9,37 @@ export const getAllCars = (page = 0, pageSize = 10) => new Promise<APIGetRespons
   }
 )
 
-export const addCar = (carro: Carro) => new Promise<Carro>(
+export const addCar = (carroFormData: FormData, token: string) => new Promise<Carro>(
   (resolve, reject) => {
-    api.post<Carro>('/carros', carro)
+    api.post<Carro>('/carros', carroFormData, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
       .then(response => resolve(response.data))
       .catch(error => reject(error))
   }
 )
 
-export const updateCar = (id: number, carro: Carro) => new Promise<Carro>(
+export const updateCar = (id: number, carro: Carro, token: string) => new Promise<Carro>(
   (resolve, reject) => {
-    api.put<Carro>(`/carros/${id}`, carro)
+    api.put<Carro>(`/carros/${id}`, carro, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
       .then(response => resolve(response.data))
       .catch(error => reject(error))
   }
 )
 
-export const removeCar = (id: number) => new Promise<string>(
+export const removeCar = (id: number, token: string) => new Promise<string>(
   (resolve, reject) => {
-    api.delete<string>(`/carros/${id}`)
+    api.delete<string>(`/carros/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
       .then(response => resolve(response.data))
       .catch(error => reject(error))
   }

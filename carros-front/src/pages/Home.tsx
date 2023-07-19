@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getAllCars } from "../api/CarroService";
 import { useQuery } from "react-query";
-import Loading from "../components/Loading";
 import { Box, Button, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import CarList from "../components/CarList";
 import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
-  // const [carros, setCarros] = useState();
+  const navigate = useNavigate()
   const { token } = useAuth()
   const isLogged = !!token
   const [page, setPage] = useState(0);
@@ -29,10 +29,13 @@ function Home() {
     setPageSize(Number(event.target.value))
   }
 
+  const handleAddCarButtonClick = () => {
+    navigate("/cadastrar-carro")
+  }
 
   return (
-    <div>
-      <Typography variant="h4" component="h2" gutterBottom>Carros Disponíveis</Typography>
+    <Box mb={2}>
+      <Typography variant="h4" component="h2" gutterBottom textAlign="center" mt={2}>Carros Disponíveis</Typography>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
           <Typography variant='body1'>Carros por página:</Typography>
@@ -47,10 +50,18 @@ function Home() {
             <MenuItem value={15}>15</MenuItem>
           </Select>
         </Box>
-        <Button variant="contained">Adicionar</Button>
+        {isLogged &&
+          <Button variant="contained" onClick={handleAddCarButtonClick}>Adicionar</Button>
+        }
       </Box>
-      <CarList carros={data!} handlePageChange={handlePageChange} isLoading={isFetching} page={page} totalPages={totalPages} />
-    </div >
+      <CarList
+        carros={data!}
+        handlePageChange={handlePageChange}
+        isLoading={isFetching}
+        page={page}
+        totalPages={totalPages}
+      />
+    </Box>
   );
 }
 
