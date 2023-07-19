@@ -1,6 +1,6 @@
 
 import { Box, Button, Stack, Typography, useMediaQuery } from '@mui/material';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Carro } from '../types';
 import FormInput from '../components/FormInput';

@@ -1,6 +1,7 @@
 import {
   Box,
   Pagination,
+  Typography,
   useMediaQuery
 } from '@mui/material';
 import { Carro } from '../../types';
@@ -12,13 +13,15 @@ function CarList({
   page,
   totalPages,
   handlePageChange,
-  isLoading
+  isLoading,
+  handleClickDeleteIcon
 }: {
   carros: Carro[],
   page: number,
   totalPages: number | undefined,
   handlePageChange: (event: React.ChangeEvent<unknown>, value: number) => void,
-  isLoading: boolean
+  isLoading: boolean,
+  handleClickDeleteIcon: (id: number) => void
 }) {
   const isLessThan768px = useMediaQuery('(min-width:768px)')
 
@@ -26,8 +29,9 @@ function CarList({
   return (
     <Box>
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: isLessThan768px ? 'space-between' : 'center' }}>
-        {
-          carros.map(c => <CarCard key={c.id} {...c} />)
+        {carros.length ?
+          carros.map(c => <CarCard key={c.id} carro={c} handleClickDeleteIcon={handleClickDeleteIcon} />)
+          : <Typography textAlign="center" width="100%">Sem carros disponíveis</Typography>
         }
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>

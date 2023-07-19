@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { getAllCars } from "../api/CarroService";
-import { useQuery } from "react-query";
+import { getAllCars, removeCar } from "../api/CarroService";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Box, Button, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import CarList from "../components/CarList";
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import ConfirmationDialog from "../components/ConfirmationDialog";
 
 function Home() {
   const navigate = useNavigate()
@@ -13,12 +14,19 @@ function Home() {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [totalPages, settotalPages] = useState<number>();
+  const [openDialog, setOpenDialog] = useState<{ open: boolean, id: number | undefined }>({ open: false, id: undefined });
+  const queryClient = useQueryClient();
   const { data, isFetching } = useQuery(["get-all-cars", page, pageSize], async () => {
     const res = await getAllCars(page, pageSize)
     setPage(res.number)
     setPageSize(res.size)
     settotalPages(res.totalPages)
     return res.content
+  })
+  const deleteCar = useMutation((id: number) => {
+    return removeCar(id, token);
+  }, {
+    onSuccess: () => queryClient.invalidateQueries(["get-all-cars"])
   })
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -31,6 +39,19 @@ function Home() {
 
   const handleAddCarButtonClick = () => {
     navigate("/cadastrar-carro")
+  }
+
+  const handleClickDeleteIcon = (id: number) => {
+    setOpenDialog({ open: true, id });
+  };
+
+  const handleClose = () => {
+    setOpenDialog({ open: false, id: undefined });
+  };
+
+  const handleConfirmDelete = (id: number) => {
+    deleteCar.mutate(id)
+    setOpenDialog({ open: false, id: undefined })
   }
 
   return (
@@ -60,6 +81,12 @@ function Home() {
         isLoading={isFetching}
         page={page}
         totalPages={totalPages}
+        handleClickDeleteIcon={handleClickDeleteIcon}
+      />
+      <ConfirmationDialog
+        open={openDialog}
+        handleConfirm={handleConfirmDelete}
+        handleClose={handleClose}
       />
     </Box>
   );
