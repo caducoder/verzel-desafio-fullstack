@@ -7,13 +7,24 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { Carro } from '../../types';
 import useAuth from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 function CarCard({ carro, handleClickDeleteIcon }: { carro: Carro, handleClickDeleteIcon: (id: number) => void },) {
   const { token } = useAuth()
+  const navigate = useNavigate()
   const isLogged = !!token
+
+  const handleCardClick = () => {
+    navigate(`/carro/${carro.id!}`)
+  }
+
+  const handleClickEditIcon = () => {
+    navigate(`/edicao/${carro.id!}`)
+  }
+
   return (
     <Card sx={{ width: 250 }}>
-      <CardActionArea >
+      <CardActionArea onClick={handleCardClick}>
         <CardMedia
           component="img"
           height="140"
@@ -34,7 +45,7 @@ function CarCard({ carro, handleClickDeleteIcon }: { carro: Carro, handleClickDe
       </CardActionArea>
       {isLogged &&
         <CardActions sx={{ display: 'flex', justifyContent: 'end' }}>
-          <IconButton aria-label="delete" color='info'>
+          <IconButton aria-label="delete" color='info' onClick={handleClickEditIcon}>
             <EditIcon />
           </IconButton>
           <IconButton aria-label="delete" color='error' onClick={() => handleClickDeleteIcon(carro.id!)}>

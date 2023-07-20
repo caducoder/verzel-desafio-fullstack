@@ -27,24 +27,29 @@ public class CarroController {
 
 	@Autowired
 	private CarroService carroService;
-	
+
 	@GetMapping
-	public ResponseEntity<Page<Carro>> getAll(@PageableDefault(sort = "valor") Pageable pageable){
+	public ResponseEntity<Page<Carro>> getAll(@PageableDefault(sort = "valor") Pageable pageable) {
 		return ResponseEntity.ok(carroService.getAll(pageable));
 	}
-	
-	@PostMapping(consumes =  {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
-	public ResponseEntity<Carro> addCar(@RequestPart("car") CarroDTO carroDto, @RequestPart("image") MultipartFile file){
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Carro> getById(@PathVariable Long id) {
+		return ResponseEntity.ok(carroService.getById(id));
+	}
+
+	@PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE })
+	public ResponseEntity<Carro> addCar(@RequestPart("car") CarroDTO carroDto, @RequestPart("image") MultipartFile file) {
 		return ResponseEntity.ok(carroService.addCar(carroDto, file));
 	}
-	
+
 	@PutMapping("/{id}")
-	public ResponseEntity<Carro> updateCar(@PathVariable Long id, @RequestBody CarroDTO carroDto){
+	public ResponseEntity<Carro> updateCar(@PathVariable Long id, @RequestBody CarroDTO carroDto) {
 		return ResponseEntity.ok(carroService.updateCar(id, carroDto));
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteCar(@PathVariable Long id){
+	public ResponseEntity<String> deleteCar(@PathVariable Long id) {
 		carroService.deleteCar(id);
 		return ResponseEntity.ok("Carro removido com sucesso.");
 	}

@@ -1,5 +1,7 @@
 package com.verzel.carros.service;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -46,5 +48,9 @@ public class CarroService {
 	
 	public void deleteCar(Long idCarro) {
 		carroRepository.deleteById(idCarro);
+	}
+
+	public Carro getById(Long id) {
+		return carroRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Carro não encontrado."));
 	}
 }

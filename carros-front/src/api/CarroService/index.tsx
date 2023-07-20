@@ -9,6 +9,14 @@ export const getAllCars = (page = 0, pageSize = 10) => new Promise<APIGetRespons
   }
 )
 
+export const getCarById = (id: number) => new Promise<Carro>(
+  (resolve, reject) => {
+    api.get<Carro>(`/carros/${id}`)
+      .then(response => resolve(response.data))
+      .catch(error => reject(error))
+  }
+)
+
 export const addCar = (carroFormData: FormData, token: string) => new Promise<Carro>(
   (resolve, reject) => {
     api.post<Carro>('/carros', carroFormData, {
