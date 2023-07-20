@@ -45,11 +45,27 @@ Senha: admin
 ```
 ## Funcionalidades
 
-- Paginação
-- Responsividade
-- Autenticação por Token JWT
-- CRUD (Create, Read, Update, Delete)
+- **Paginação**: Os carros são exibidos em páginas, proporcionando uma experiência de navegação mais fluída.
 
+- **Responsividade**: A aplicação é responsiva, adaptando-se a diferentes dispositivos, como smartphones, tablets e computadores.
+
+- **Autenticação por Token JWT**: O sistema utiliza autenticação baseada em Token JWT (JSON Web Token) para garantir a segurança das operações.
+
+- **CRUD** (Create, Read, Update, Delete): O perfil administrativo permite adicionar, visualizar, atualizar e excluir carros do catálogo.
+
+## Documentação
+
+### Passo a passo do fluxo de autenticação:
+
+O servidor de autenticação OAuth é responsável por gerar tokens JWT e validar a autenticação dos usuários. Ele é configurado usando a biblioteca Spring Security OAuth2.
+
+Quando o administrador faz o login, ele envia uma solicitação de autenticação para o servidor de autenticação OAuth. Essa solicitação inclui as credenciais de autenticação do usuário, que nesse caso é email e senha.
+
+O servidor de autenticação valida as credenciais do usuário. Se as credenciais estiverem corretas, o servidor gera um token JWT e retorna-o para o cliente.
+
+Dessa forma, o cliente envia o token junto a requisição para as rotas privadas, e se for válido, libera o acesso ao recurso.
+
+No cliente, o token está sendo guardado no contexto da aplicação, atráves do hook useContext.
 
 ## Apêndice
 
