@@ -26,18 +26,14 @@ public class AuthController {
 
 	@PostMapping
 	public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginDTO data) {
-		try {
-			Authentication authentication = authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(data.email(), data.senha()));
 
-			String token = jwtTokenService.generateToken(authentication);
-			LoginResponseDTO tokenResponse = new LoginResponseDTO(token);
+		Authentication authentication = authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(data.email(), data.senha()));
 
-			return ResponseEntity.ok(tokenResponse);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return ResponseEntity.notFound().build();
-		}
+		String token = jwtTokenService.generateToken(authentication);
+		LoginResponseDTO tokenResponse = new LoginResponseDTO(token);
+
+		return ResponseEntity.ok(tokenResponse);
 
 	}
 }

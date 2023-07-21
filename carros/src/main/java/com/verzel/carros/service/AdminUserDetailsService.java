@@ -17,7 +17,7 @@ public class AdminUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		return adminRepository.findByEmail(username)
-				.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
+		return adminRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(""));
+				
 	}
 }
