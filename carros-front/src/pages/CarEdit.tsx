@@ -59,6 +59,8 @@ function CarEdit() {
     }
   };
 
+  const goBack = () => navigate(-1);
+
   return (
     <div>
       <Typography variant="h4" component="h2" gutterBottom textAlign="center" mt={2}>
@@ -109,8 +111,22 @@ function CarEdit() {
               type='number'
             />
             <Stack gap={2}>
-              <Button type='submit' variant='contained' color='success' sx={{ justifySelf: 'center' }}>Salvar</Button>
-              <Button type='submit' variant='outlined' color='error' sx={{ justifySelf: 'center' }}>Cancelar</Button>
+              <Button
+                type='submit'
+                variant='contained'
+                color='success'
+                sx={{ justifySelf: 'center' }}
+              >
+                Salvar
+              </Button>
+              <Button
+                variant='outlined'
+                color='error'
+                sx={{ justifySelf: 'center' }}
+                onClick={goBack}
+              >
+                Cancelar
+              </Button>
             </Stack>
           </Stack>
         </Box>
