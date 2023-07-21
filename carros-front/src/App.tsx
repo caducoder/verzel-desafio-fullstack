@@ -8,7 +8,14 @@ import RequireAuth from './components/RequireAuth';
 import CardDetails from './pages/CarDetails';
 import CarEdit from './pages/CarEdit';
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000, // 1 min
+      cacheTime: 5 * (60 * 1000), // 5 mins
+    },
+  },
+})
 
 function App() {
 
