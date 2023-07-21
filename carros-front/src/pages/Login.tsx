@@ -1,11 +1,12 @@
-import { Paper, Typography, Button, Stack } from '@mui/material'
+import { Paper, Typography, Button, Stack, Snackbar } from '@mui/material'
 import { useForm } from "react-hook-form";
 import FormInput from '../components/FormInput';
 import useAuth from '../hooks/useAuth';
 import api from '../api/axios';
 import { AxiosError } from 'axios'
-import { IContext } from '../context/AuthProvider';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { AlertMessage } from '../components/AlertMessage';
 
 export interface ILoginProps {
   email: string,
@@ -17,8 +18,10 @@ interface ILoginResponse {
 }
 
 function Login() {
-  const { setToken }: IContext = useAuth()
   const navigate = useNavigate()
+  const { setToken } = useAuth()
+  const [openAlert, setOpenAlert] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | unknown>("");
   const { handleSubmit, control } = useForm<ILoginProps>()
 
   const onSubmit = async ({ email, senha }: ILoginProps) => {
@@ -35,10 +38,19 @@ function Login() {
       navigate("/")
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log(error.message)
+        setErrorMsg(error.response?.data)
+        setOpenAlert(true)
       }
     }
   }
+
+  const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
 
   return (
     <section
@@ -78,6 +90,14 @@ function Login() {
           </Stack>
         </form>
       </Paper>
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={3000}
+        onClose={handleCloseAlert}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <AlertMessage severity='error'>{errorMsg as string}</AlertMessage>
+      </Snackbar>
     </section>
   );
 }
