@@ -1,7 +1,6 @@
 
 # Catálogo de Veículos
 
-Projeto criado para o desafio fullstack da verzel. Consiste em um sistema para
 O sistema de catálogo de carros desenvolvido para o desafio fullstack da empresa Verzel é uma aplicação web moderna e responsiva, que permite aos usuários  visualizar uma ampla variedade de carros disponíveis para venda. O sistema conta com um perfil administrativo para adicionar, alterar e excluir carros.
 
 
